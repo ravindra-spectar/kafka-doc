@@ -1,0 +1,33 @@
+::::::::::::::::::to check partitions inside topics using docker run this ::::::::::::::::::::::::::::
+
+e25233f488f6- it is a container id of kafka.
+
+docker exec -it e25233f488f6 kafka-topics \
+--describe \
+--topic rider-updates \
+--bootstrap-server localhost:9092 
+
+::::::::::::::::::::to add more partitions using docker then alter the topic:::::::::::::::::::::
+
+docker exec -it e25233f488f6 kafka-topics \
+--alter \
+--topic rider-updates \
+--bootstrap-server localhost:9092 \
+--partitions 2
+
+
+::::::::::::::: To run zookeeper service to interact with kafka ::::::::::::::::::
+
+- docker run -p 2181:2181 zookeeper
+
+:::::::::::::::::::::: To run KAFKA Service :::::::::::::::::::::::::::::::
+
+2181 : It is a zookeeper default port
+9092 : It is a kafka default port
+
+docker run -p 9092:9092 \
+> -e KAFKA_ZOOKEEPER_CONNECT=<IP ADDRESS >:2181 \
+> -e KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR = 1 \
+>  confluentinc/cp-kafka:7.3.0
+
+This will run kafka and zookeeper both
