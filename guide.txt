@@ -25,9 +25,13 @@ docker exec -it e25233f488f6 kafka-topics \
 2181 : It is a zookeeper default port
 9092 : It is a kafka default port
 
+
 docker run -p 9092:9092 \
-> -e KAFKA_ZOOKEEPER_CONNECT=<IP ADDRESS >:2181 \
-> -e KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR = 1 \
->  confluentinc/cp-kafka:7.3.0
+-e KAFKA_ZOOKEEPER_CONNECT=<PRIVATE_IP>:2181 \
+-e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://<PRIVATE_IP>:9092 \
+-e KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1 \
+confluentinc/cp-kafka
+
+
 
 This will run kafka and zookeeper both
